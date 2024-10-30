@@ -156,7 +156,7 @@ onMounted(() => {
           </button>
           <button
             type="button"
-            @click="distanceDialogRef.value?.close()"
+            @click="distanceDialogRef.close()"
             class="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
           >
             Отмена
@@ -202,11 +202,11 @@ onMounted(() => {
             type="submit"
             class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
           >
-            Отправить
+            Добавить
           </button>
           <button
             type="button"
-            @click="dialogRef.value.close()"
+            @click="dialogRef.close()"
             class="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
           >
             Отмена
