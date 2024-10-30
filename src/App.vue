@@ -132,15 +132,15 @@ onMounted(() => {
 <template>
   <div class="flex w-screen h-screen items-center justify-center">
     <div
-      class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-gray-50 p-4 rounded-xl"
+      class="flex flex-col md:flex-row justify-between items-center gap-4 bg-gray-50 p-4 rounded-xl"
     >
       <div
-        class="bg-gray rounded-xl sm:w-[1000px] sm:h-[800px] w-full h-[75vh] relative flex"
+        class="bg-gray rounded-xl md:w-[60vw] md:h-[80vh] w-[95vw] h-[75vh] relative flex"
       >
         <div id="map" class="w-full h-full"></div>
       </div>
       <div
-        class="flex flex-col sm:w-[400px] sm:h-[800px] h-[25vh] w-[95vw] gap-2"
+        class="flex flex-col md:w-[20vw] md:h-[80vh] h-[25vh] w-[95vw] gap-2"
       >
         <div class="flex gap-2 justify-center items-center">
           <button
