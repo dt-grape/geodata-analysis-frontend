@@ -116,6 +116,13 @@ const clearMap = async () => {
   });
 };
 
+const validateDistanceInput = (event) => {
+  const input = event.target.value;
+  if (!/^[0-9]*$/.test(input) || input < 1) {
+    event.target.value = input.slice(0, -1);
+  }
+};
+
 onMounted(() => {
   map.value = L.map("map").setView([54.986392, 82.862919], 20);
 
@@ -145,11 +152,14 @@ onMounted(() => {
         <div class="flex gap-2 justify-center items-center">
           <button
             @click="requestUserLocation"
-            class="bg-blue-500 text-white p-2 rounded"
+            class="bg-blue-500 text-white p-2 rounded w-1/2"
           >
             Буферная зона
           </button>
-          <button @click="clearMap" class="bg-blue-500 text-white p-2 rounded">
+          <button
+            @click="clearMap"
+            class="bg-blue-500 text-white p-2 rounded w-1/2"
+          >
             Очистить
           </button>
         </div>
@@ -175,6 +185,8 @@ onMounted(() => {
           >
           <input
             type="number"
+            @input="validateDistanceInput"
+            min="1"
             v-model="distance"
             required
             class="w-full px-3 py-2 border border-gray-300 rounded-md"
@@ -206,6 +218,7 @@ onMounted(() => {
           <label class="block text-sm font-medium text-gray-700">Широта</label>
           <input
             type="text"
+            disabled
             v-model="currentLatLng.lat"
             readonly
             class="w-full px-3 py-2 border border-gray-300 rounded-md"
@@ -215,6 +228,7 @@ onMounted(() => {
           <label class="block text-sm font-medium text-gray-700">Долгота</label>
           <input
             type="text"
+            disabled
             v-model="currentLatLng.lng"
             readonly
             class="w-full px-3 py-2 border border-gray-300 rounded-md"
