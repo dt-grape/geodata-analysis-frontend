@@ -120,15 +120,29 @@ onMounted(() => {
 
 <template>
   <div class="flex w-screen h-screen items-center justify-center">
-    <div class="bg-gray rounded-xl w-[1200px] h-[800px] relative flex">
-      <div id="map" class="w-full h-full"></div>
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div
+        class="bg-gray rounded-xl sm:w-[1000px] sm:h-[800px] w-full h-[75vh] relative flex"
+      >
+        <div id="map" class="w-full h-full"></div>
+      </div>
+      <div
+        class="flex flex-col sm:w-[400px] sm:h-[800px] h-[25vh] w-[95vw] gap-2"
+      >
+        <div class="flex gap-2 justify-center items-center">
+          <button
+            @click="requestUserLocation"
+            class="bg-blue-500 text-white p-2 rounded"
+          >
+            Буферная зона
+          </button>
+          <button class="bg-blue-500 text-white p-2 rounded">Очистить</button>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-xl">
+          <h2>Объекты в буферной зоне:</h2>
+        </div>
+      </div>
     </div>
-    <button
-      @click="requestUserLocation"
-      class="absolute top-4 left-4 bg-blue-500 text-white p-2 rounded"
-    >
-      Показать буферную зону
-    </button>
 
     <dialog ref="distanceDialogRef" class="p-6 border rounded-md">
       <h2 class="text-xl font-semibold mb-4">
