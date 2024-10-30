@@ -13,6 +13,7 @@ const dialogRef = ref(null);
 const distance = ref(0);
 const userLocation = ref({ lat: null, lng: null });
 const distanceDialogRef = ref(null);
+const bufferObjects = ref([]);
 
 const loadObjects = async () => {
   const response = await axios.get("/");
@@ -44,11 +45,12 @@ const showBufferZone = async () => {
   const response = await axios.get(
     `/near?latitude=${latitude}&longitude=${longitude}&distance=${distance.value}`,
   );
-  const objects = response.data;
 
-  console.log("Объекты в буферной зоне:", objects);
+  bufferObjects.value = response.data;
 
-  objects.forEach((object) => {
+  console.log("Объекты в буферной зоне:", bufferObjects.value);
+
+  bufferObjects.value.forEach((object) => {
     L.marker([object.latitude, object.longitude])
       .addTo(toRaw(map.value))
       .bindPopup(object.name)
@@ -105,6 +107,15 @@ const submitData = async () => {
   }
 };
 
+const clearMap = async () => {
+  await axios.post("/clear");
+  toRaw(map.value).eachLayer((layer) => {
+    if (layer instanceof L.Marker) {
+      toRaw(map.value).removeLayer(layer);
+    }
+  });
+};
+
 onMounted(() => {
   map.value = L.map("map").setView([54.986392, 82.862919], 20);
 
@@ -120,7 +131,9 @@ onMounted(() => {
 
 <template>
   <div class="flex w-screen h-screen items-center justify-center">
-    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div
+      class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-gray-50 p-4 rounded-xl"
+    >
       <div
         class="bg-gray rounded-xl sm:w-[1000px] sm:h-[800px] w-full h-[75vh] relative flex"
       >
@@ -136,10 +149,17 @@ onMounted(() => {
           >
             Буферная зона
           </button>
-          <button class="bg-blue-500 text-white p-2 rounded">Очистить</button>
+          <button @click="clearMap" class="bg-blue-500 text-white p-2 rounded">
+            Очистить
+          </button>
         </div>
-        <div class="bg-gray-100 p-4 rounded-xl">
+        <div class="bg-gray-200 p-4 rounded-xl">
           <h2>Объекты в буферной зоне:</h2>
+          <ul>
+            <li v-for="object in bufferObjects" :key="object.id">
+              {{ object.name }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
