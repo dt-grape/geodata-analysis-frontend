@@ -132,8 +132,6 @@ onMounted(() => {
 
   const svgElement = document.querySelector('.leaflet-attribution-flag');
 
-  svgElement.innerHTML = '';
-
   svgElement.innerHTML = `
     <path fill="#FFFFFF" d="M0 0h12v3H0z"></path>
     <path fill="#0033A0" d="M0 3h12v2H0z"></path>
